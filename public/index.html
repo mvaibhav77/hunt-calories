@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>HuntCalories | Meal & Calorie Tracker</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper purple">
+            <div class="container">
+                <a href="" class="brand-logo center"> HuntCalories</a>
+                <ul class="right">
+                    <li><a href=""class="clear-btn btn purple lighten-3">Clear All</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Add Meal / Food Item</span>
+                <form class="col">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text"placeholder="Add Item" id="item-name">
+                            <label for="item-name">Meal</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="number"placeholder="Add Calories" id="item-cal">
+                            <label for="item-cal">Calories/100gm</label>
+                        </div>
+                        <button class="add-btn btn purple darken-3"><i class="fa fa-plus"></i> Add Meal</button>
+                    
+                        <button class="update-btn btn blue"><i class="fa fa-square-pen"></i> Update Meal</button>
+                        <button class="del-btn btn red"><i class="fa fa-circle-minus"></i> Delete Meal</button>
+                    
+                        <button class="back-btn btn grey right"><i class="fa fa-circle-chevron-left"></i> Back</button>
+                    </div>
+                </form>       
+            </div>
+        </div>
+         <!-- Calorie Count -->
+         <h3 class="center-align">Total Calories: <span class="total-cal">0</span>
+         </h3>
+
+         <!-- Item list -->
+         <ul id="item-list"class="collection">
+         </ul>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
