@@ -380,3 +380,24 @@ const App = (function(ItemCtrl,UICtrl,StorageCtrl){
 
 // Initializing App
 App.init();
+
+
+
+// Responsive nature
+
+const makeResponsive = ()=>{
+    if(window.innerWidth < 600){
+        document.querySelector('.brand-logo').classList.add('left');
+
+    }else{
+        document.querySelector('.brand-logo').classList.remove('left');
+    }
+
+    if(window.innerWidth < 500){
+        document.querySelector('.clear-btn').style='font-size:12px';
+    }else{
+        document.querySelector('.clear-btn').style='font-size:14px';
+    }
+}
+
+window.onresize = makeResponsive;
