@@ -4,6 +4,7 @@
   "description": "",
   "main": "public/app.js",
   "scripts": {
+    "start":"node index",
     "dev": "nodemon index"
   },
   "repository": {
