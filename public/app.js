@@ -385,6 +385,7 @@ App.init();
 
 // Responsive nature
 
+
 const makeResponsive = ()=>{
     if(window.innerWidth < 600){
         document.querySelector('.brand-logo').classList.add('left');
@@ -400,4 +401,6 @@ const makeResponsive = ()=>{
     }
 }
 
+
+makeResponsive();
 window.onresize = makeResponsive;
