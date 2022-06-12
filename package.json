@@ -4,7 +4,7 @@
   "description": "",
   "main": "public/app.js",
   "scripts": {
-    "start":"node index",
+    "start": "node index",
     "dev": "nodemon index"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "nodemon": "^2.0.16"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1"

@@ -158,6 +158,7 @@ const ItemCtrl = (function(){
 const UICtrl = (function(){
     const UISelectors = {
         itemList:'#item-list',
+        form:'.col',
         listItems:'#item-list li',
         cardTitle:'.card-title',
         addBtn:'.add-btn',
@@ -174,11 +175,15 @@ const UICtrl = (function(){
         getSelectors:()=>{
            return UISelectors;
         },
+        autoShowCalories:(calories)=>{
+            calories = Math.round(calories);
+            document.querySelector(UISelectors.itemCal).value = calories
+        },
         addListItem:(item)=>{
             document.querySelector(UISelectors.itemList).style.display='block';
             document.querySelector(UISelectors.itemList).innerHTML+=`
             <li class="collection-item" id="item-${item.id}">
-                <strong>${item.name}: </strong><em>${item.calories} Calories/100gm</em>
+                <strong>${item.name}: </strong><em>${item.calories} Calories</em>
                 <a href="#" class="secondary-content">
                     <i class="edit-item fa fa-pencil"></i>
                 </a>
@@ -189,7 +194,7 @@ const UICtrl = (function(){
         },
         updateListItem:(item)=>{
             document.querySelector(`#item-${item.id}`).innerHTML=`
-                <strong>${item.name}: </strong><em>${item.calories} Calories/100gm</em>
+                <strong>${item.name}: </strong><em>${item.calories} Calories</em>
                 <a href="#" class="secondary-content">
                     <i class="edit-item fa fa-pencil"></i>
                 </a>
@@ -205,7 +210,7 @@ const UICtrl = (function(){
             items.forEach((item)=>{
                 output+=`
                 <li class="collection-item" id="item-${item.id}">
-                    <strong>${item.name}: </strong><em>${item.calories} Calories/100gm</em>
+                    <strong>${item.name}: </strong><em>${item.calories} Calories</em>
                     <a href="#" class="secondary-content">
                         <i class="edit-item fa fa-pencil"></i>
                     </a>
@@ -256,14 +261,37 @@ const UICtrl = (function(){
     }
 })();
 
+// API Controller
+const APICtrl = (function(UICtrl){
+    const api = new Nutrition();
+
+    return {
+        getCalories : (name)=>{
+            api.getNutrients(name)
+            .then(data=>{
+                let calories = data.nf_calories;
+                console.log(data);
+                UICtrl.autoShowCalories(calories);
+            })
+             .catch(()=>null);
+        } ,
+        getFats : (name)=>{
+            const fats = api.getNutrients(name).then((data)=>data.fields.nf_total_fat).catch(()=>null);
+            return fats;
+        } 
+    }
+})(UICtrl)
 
 
 
 
 // App Controller
-const App = (function(ItemCtrl,UICtrl,StorageCtrl){
+const App = (function(ItemCtrl,UICtrl,StorageCtrl,APICtrl){
+    const UISelectors = UICtrl.getSelectors();
+    
     const loadEventListeners = ()=>{
-        const UISelectors = UICtrl.getSelectors();
+        // Name Keydown Event 
+        document.querySelector(UISelectors.itemName).addEventListener('keyup', autoWriteCalories);
 
         // Add item Event
         document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
@@ -290,6 +318,20 @@ const App = (function(ItemCtrl,UICtrl,StorageCtrl){
         // Clear All Event
         document.querySelector(UISelectors.clearAll).addEventListener('click',clearAllEvent);
 
+    }
+
+    const autoWriteCalories = (e)=>{
+        let itemName =  document.querySelector(UISelectors.itemName).value;
+        let itemCal = document.querySelector(UISelectors.itemCal);
+        let re = /^\S/i ; 
+        if(itemName!=='' && re.test(itemName)){
+            APICtrl.getCalories(itemName)
+        }
+        if(itemName ===''){
+           itemCal.value=``;
+        }
+
+        e.preventDefault();
     }
 
     const itemAddSubmit = (e)=>{
@@ -375,11 +417,15 @@ const App = (function(ItemCtrl,UICtrl,StorageCtrl){
             UICtrl.clearEditState();
         }
     }
-})(ItemCtrl,UICtrl,StorageCtrl);
+})(ItemCtrl,UICtrl,StorageCtrl,APICtrl);
 
 
 // Initializing App
 App.init();
+
+
+// const api  =new Nutrition();
+// api.getNutrients('Cheese Sandwich').then(data=>console.log(data));
 
 
 
