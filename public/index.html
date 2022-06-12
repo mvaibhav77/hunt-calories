@@ -25,11 +25,16 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">Add Meal / Food Item</span>
-                <form class="col">
+                <form class="col" autocomplete="off">
                     <div class="row">
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m6"style="position:relative">
                             <input type="text"placeholder="Add Item" id="item-name">
                             <label for="item-name">Meal</label>
+                            <div class="suggestion row" style = "margin-top:-9px;padding:0 10px;width:100%;position:absolute;z-index:2;">
+                                <ul class="collection"style="top:-6px">
+                                    <!-- <li class="collection-item">item 1</li> -->
+                                </ul>
+                            </div>
                         </div>
                         <div class="input-field col s12 m6">
                             <input type="number"placeholder="Add Calories" id="item-cal">
@@ -60,5 +65,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="api.js"></script>
     <script src="app.js"></script>
+
+
+    <style>
+        .collection li:hover{
+            cursor: pointer;
+            background-color: aliceblue;
+        }
+    </style>
 </body>
 </html>

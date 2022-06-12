@@ -159,6 +159,7 @@ const UICtrl = (function(){
     const UISelectors = {
         itemList:'#item-list',
         form:'.col',
+        collection:'.collection',
         listItems:'#item-list li',
         cardTitle:'.card-title',
         addBtn:'.add-btn',
@@ -174,6 +175,36 @@ const UICtrl = (function(){
     return{
         getSelectors:()=>{
            return UISelectors;
+        },
+        showSuggestions:(data)=>{
+            let output='';
+            for(let i=0;i<5;i++){
+                output += `
+                    <li class="collection-item">${data[i].fields.item_name}</li>
+                `
+            }        
+            document.querySelector(UISelectors.collection).innerHTML=output;
+
+            // Eventlistener for adding suggestion to itemName value
+            document.querySelector(UISelectors.collection).addEventListener('click',(e)=>{
+                if(e.target.classList.contains('collection-item')){
+                    document.querySelector(UISelectors.itemName).value = e.target.textContent;
+
+                    let calories;
+                    for(let i=0;i<5;i++){
+                        if(e.target.textContent === data[i].fields.item_name){
+                            calories = data[i].fields.nf_calories;
+                        }
+                    }        
+
+                     document.querySelector(UISelectors.collection).innerHTML='';
+                     if(calories){
+                        UICtrl.autoShowCalories(calories);
+                    }
+                    
+                    }
+            })
+
         },
         autoShowCalories:(calories)=>{
             calories = Math.round(calories);
@@ -268,9 +299,10 @@ const APICtrl = (function(UICtrl){
     return {
         getCalories : (name)=>{
             api.getNutrients(name)
-            .then(data=>{
-                let calories = data.nf_calories;
+            .then(data => {
+                let calories = data[0].fields.nf_calories;
                 // console.log(data);
+                UICtrl.showSuggestions(data);
                 UICtrl.autoShowCalories(calories);
             })
              .catch(()=>null);
@@ -327,7 +359,7 @@ const App = (function(ItemCtrl,UICtrl,StorageCtrl,APICtrl){
         if(itemName!=='' && re.test(itemName)){
             APICtrl.getCalories(itemName)
         }
-        if(itemName ===''){
+        if(itemName === ''){
            itemCal.value=``;
         }
 
