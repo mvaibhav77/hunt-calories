@@ -270,7 +270,7 @@ const APICtrl = (function(UICtrl){
             api.getNutrients(name)
             .then(data=>{
                 let calories = data.nf_calories;
-                console.log(data);
+                // console.log(data);
                 UICtrl.autoShowCalories(calories);
             })
              .catch(()=>null);
