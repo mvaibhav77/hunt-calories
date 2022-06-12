@@ -361,6 +361,7 @@ const App = (function(ItemCtrl,UICtrl,StorageCtrl,APICtrl){
         }
         if(itemName === ''){
            itemCal.value=``;
+           document.querySelector(UISelectors.collection).innerHTML='';
         }
 
         e.preventDefault();
